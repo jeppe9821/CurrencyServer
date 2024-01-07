@@ -19,14 +19,14 @@ Insert your API key from ExchangeRatesAPI (https://exchangeratesapi.io/) into th
 ENV API_KEY=API_KEY_HERE
 ```
 
-Step 3: Build Docker Image
+### Step 3: Build Docker Image
 Navigate to the root folder in the terminal and run the following command to build the docker image:
 
 ```bash
 docker build -f "Dockerfile" --force-rm -t currencyserver:dev --target base --build-arg "BUILD_CONFIGURATION=Debug" --label "com.microsoft.created-by=visual-studio" --label "com.microsoft.visual-studio.project-name=CurrencyServer" "."
 ```
 
-Step 4: Start Docker Container
+### Step 4: Start Docker Container
 In the root folder, in your terminal run the following command to create and run the container:
 
 ```bash
