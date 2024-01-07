@@ -15,9 +15,9 @@ namespace CurrencyServer.Http
 
         public ExchangeRateHttpClient(ExchangeRateApiOptions apiOptions, HttpClient httpClient)
         {
-            _exchangeRateApiBaseUrl = apiOptions.BaseUrl ?? throw new ArgumentException(nameof(apiOptions));
-            _exchangeApiVersion = apiOptions.Version ?? throw new ArgumentException(nameof(apiOptions));
-            _apiKey = apiOptions.SecretKey ?? throw new ArgumentException(nameof(apiOptions));
+            _exchangeRateApiBaseUrl = apiOptions.BaseUrl ?? throw new ArgumentNullException("Base url is null", nameof(apiOptions));
+            _exchangeApiVersion = apiOptions.Version ?? throw new ArgumentNullException("Api version is null", nameof(apiOptions));
+            _apiKey = apiOptions.SecretKey ?? throw new ArgumentNullException("The secret key is null", nameof(apiOptions));
 
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
@@ -45,7 +45,7 @@ namespace CurrencyServer.Http
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new HttpRequestException($"HTTP request failed with status code {response.StatusCode}");
+                throw new HttpRequestException($"GetExchangeRate GET HTTP request failed with status code: {response.StatusCode}");
             }
 
             var content = await response.Content.ReadAsStringAsync();
