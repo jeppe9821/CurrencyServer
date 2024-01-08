@@ -27,17 +27,26 @@ docker build -f "Dockerfile" --force-rm -t currencyserver:dev --target base --bu
 ```
 
 ### Step 4: Start Docker Container
-In the root folder, in your terminal run the following command to create and run the container:
+Replace PATH_TO_REPO with the path to the git repository and then from the root folder run the following command:
 
 ```bash
-docker run -dt -p 80:80 --name CurrencyServer currencyserver:dev
+docker run -dt -v "PATH_TO_REPO\CurrencyServer:/app" -v "PATH_TO_REPO:/src/" -p 8080:80 --name CurrencyServer currencyserver:dev
 ```
 
-Now the container should have a unique port which can be used for API requests
+Now take the ID of the docker container and use it for the next step
+
+### Step 5: Run the CurrencyServer
+Replace CONTAINER_ID with the id of the container
+
+```bash
+docker exec -i -e ASPNETCORE_URLS="http://+:80" -w "/app" CONTAINER_ID sh -c ""dotnet" \"/app/bin/Debug/net6.0/CurrencyServer.dll\"
+```
+
+Now the container should be running the program on port 8080 and can be interacted with using CURL or other API calls
 
 ## Usage
 ```bash
-curl --location --request POST 'http://localhost:INSERT_PORT_HERE_FROM_DOCKER/currencydelta' \
+curl --location --request POST 'http://localhost:8080/currencydelta' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "baseline": "GBP",
