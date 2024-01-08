@@ -54,7 +54,7 @@ docker exec -i -e ASPNETCORE_URLS="http://+:80" -w "/app" CONTAINER_ID sh -c ""d
 Now the container should be running the program on port 8080 and can be interacted with using CURL or other API calls
 
 ## Alternative build
-Instead of running the commands manually, you can also just run this batch script in the git repository root folder:
+Instead of running the commands manually, you can also just run this batch script in the git repository root folder (api key needs to be changed in dockerfile before, see step 2)
 ```bash
 @echo off
 
