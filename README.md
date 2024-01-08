@@ -1,6 +1,6 @@
 # CurrencyServer
 
-CurrencyServer is a simple REST API created in ASP.NET utilizing MVC pipeline for the routing. Created for Genero code test 
+CurrencyServer is a simple REST API created in ASP.NET utilizing MVC pipeline for the routing. The purpose of the project is to handle currency exchange values, this project currently only supports checking the delta value between one currency and a set of other currencies. Created for Genero code test 
 
 ## Running Locally
 
