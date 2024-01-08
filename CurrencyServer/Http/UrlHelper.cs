@@ -18,7 +18,7 @@
         {
             if(string.IsNullOrEmpty(url))
             {
-                throw new ArgumentException("Url cannot be empty or null", nameof(url));
+                throw new ArgumentNullException(nameof(url), "Url cannot be empty or null");
             }
 
             if(url.EndsWith(EndingToken))
