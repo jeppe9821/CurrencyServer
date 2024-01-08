@@ -1,6 +1,6 @@
 # CurrencyServer
 
-CurrencyServer is a simple REST API created in ASP.NET utilizing MVC pipeline for the routing. The purpose of the project is to handle currency exchange values, this project currently only supports checking the delta value between one currency and a set of other currencies. Created for Genero code test 
+CurrencyServer is a simple REST API created in ASP.NET utilizing MVC pipeline for the routing. The purpose of the project is to handle currency exchange values, this project currently only supports checking the delta value between one currency and a set of other currencies. Created for Genero code test. The program was created in .NET Core 6.0.417
 
 ## Running Locally
 
@@ -53,16 +53,52 @@ docker exec -i -e ASPNETCORE_URLS="http://+:80" -w "/app" CONTAINER_ID sh -c ""d
 
 Now the container should be running the program on port 8080 and can be interacted with using CURL or other API calls
 
+## Alternative build
+Instead of running the commands manually, you can also just run this batch script in the git repository root folder:
+```bash
+@echo off
+
+echo.
+echo.
+echo \======Building the program======\
+REM Step 2: Build the program
+cd CurrencyServer
+dotnet build
+cd ..
+
+echo.
+echo.
+echo \======Stopping and removing previous docker container======\
+docker stop CurrencyServer
+docker rm CurrencyServer
+
+echo.
+echo.
+echo \======Building the docker image======\
+docker build -f "CurrencyServer\Dockerfile" --force-rm -t currencyserver:dev --target base --build-arg "BUILD_CONFIGURATION=Debug" "CurrencyServer"
+
+echo.
+echo.
+echo \======Start docker container======\
+docker run -dt -v "C:\Dev\CurrencyServer-main\CurrencyServer:/app" -v "C:\Dev\CurrencyServer-main:/src/" -p 8080:80 --name CurrencyServer currencyserver:dev
+
+echo.
+echo.
+echo \======Insert the ID from above======\
+set /p CONTAINER_ID=Enter the ID of the Docker container: 
+
+echo.
+echo.
+echo \======Run CurrencyServer.dll from the docker container======\
+echo The API can now be interacted with by localhost:8080
+echo.
+docker exec -i -e ASPNETCORE_URLS="http://+:80" -w "/app" %CONTAINER_ID% sh -c "dotnet /app/bin/Debug/net6.0/CurrencyServer.dll"
+```
+
+
 ## Usage
 ```bash
-curl --location --request POST 'http://localhost:8080/currencydelta' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "baseline": "GBP",
-    "currencies": ["USD", "SEK"],
-    "fromDate": "2021-09-01",
-    "toDate": "2023-08-30"
-}'
+curl --location --request POST "http://localhost:8080/currencydelta" --header "Content-Type: application/json" --data-raw "{\"baseline\": \"GBP\",\"currencies\": [\"USD\", \"SEK\"],\"fromDate\": \"2021-09-01\",\"toDate\": \"2023-08-30\"}"
 ```
 
 ### API Endpoints
