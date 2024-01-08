@@ -32,3 +32,31 @@ In the root folder, in your terminal run the following command to create and run
 ```bash
 docker run -dt -p 80:80 --name CurrencyServer currencyserver:dev
 ```
+
+Now the container should have a unique port which can be used for API requests
+
+## Usage
+```bash
+curl --location --request POST 'http://localhost:INSERT_PORT_HERE_FROM_DOCKER/currencydelta' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "baseline": "GBP",
+    "currencies": ["USD", "SEK"],
+    "fromDate": "2021-09-01",
+    "toDate": "2023-08-30"
+}'
+```
+
+### API Endpoints
+/currencydelta => Returns a list of currency exchange values based on the delta between the baseline currency to the selected currencies
+
+Example body:
+```bash
+{
+    "baseline": "GBP",
+    "currencies": ["usd", "SEK"],
+    "fromDate": "2021-09-01",
+    "toDate": "2023-08-30"
+}
+```
+
