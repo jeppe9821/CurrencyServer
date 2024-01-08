@@ -13,7 +13,7 @@ git clone https://github.com/jeppe9821/CurrencyServer.git
 ```
 
 ### Step 2: Insert API Key
-Insert your API key from ExchangeRatesAPI (https://exchangeratesapi.io/) into the Dockerfile, replace API_KEY_HERE with your actual API key
+Insert your API key from ExchangeRatesAPI (https://exchangeratesapi.io/) into the Dockerfile, replace API_KEY_HERE with your actual API key. The dockerfile can be found under CurrencyServer/Dockerfile
 
 ```bash
 ENV API_KEY=API_KEY_HERE
