@@ -19,14 +19,23 @@ Insert your API key from ExchangeRatesAPI (https://exchangeratesapi.io/) into th
 ENV API_KEY=API_KEY_HERE
 ```
 
-### Step 3: Build Docker Image
+### Step 3: Build the program
+Open a command prompt at the root folder and run:
+
+```bash
+dotnet build
+```
+
+This should generate a DLL under \bin\Debug\net6.0\CurrencyServer.dll
+
+### Step 4: Build Docker Image
 Navigate to the root folder in the terminal and run the following command to build the docker image:
 
 ```bash
 docker build -f "Dockerfile" --force-rm -t currencyserver:dev --target base --build-arg "BUILD_CONFIGURATION=Debug" "."
 ```
 
-### Step 4: Start Docker Container
+### Step 5: Start Docker Container
 Replace PATH_TO_REPO with the path to the git repository and then from the root folder run the following command:
 
 ```bash
@@ -35,7 +44,7 @@ docker run -dt -v "PATH_TO_REPO\CurrencyServer:/app" -v "PATH_TO_REPO:/src/" -p 
 
 Now take the ID of the docker container and use it for the next step
 
-### Step 5: Run the CurrencyServer
+### Step 6: Run the CurrencyServer
 Replace CONTAINER_ID with the id of the container
 
 ```bash
