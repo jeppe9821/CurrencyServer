@@ -20,8 +20,8 @@ namespace CurrencyServer.Services
         {
             var currencyDeltas = new List<CurrencyDeltaResponse>();
 
-            var exchangePastRate = await _exchangeRateHttpClient.GetExchangeRate(request.fromDate, request.Baseline, request.Currencies);
-            var exchangeFutureRate = await _exchangeRateHttpClient.GetExchangeRate(request.toDate, request.Baseline, request.Currencies);
+            var exchangePastRate = await _exchangeRateHttpClient.GetExchangeRate(request.FromDate, request.Baseline, request.Currencies);
+            var exchangeFutureRate = await _exchangeRateHttpClient.GetExchangeRate(request.ToDate, request.Baseline, request.Currencies);
 
             var options = new ParallelOptions()
             {

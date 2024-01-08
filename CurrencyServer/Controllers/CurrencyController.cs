@@ -19,7 +19,7 @@ namespace CurrencyServer.Controllers
         [Route("currencydelta")]
         public async Task<ActionResult<IEnumerable<CurrencyDeltaResponse>>> Post([FromBody] CurrencyDeltaRequest request)
         {
-            var dateComparison = DateTime.Compare(request.fromDate, request.toDate);
+            var dateComparison = DateTime.Compare(request.FromDate, request.ToDate);
 
             if (dateComparison >= 0)
             {

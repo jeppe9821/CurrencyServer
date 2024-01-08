@@ -16,6 +16,6 @@ namespace CurrencyServer.Http
         /// <returns>The exchange rates</returns>
         /// <exception cref="HttpRequestException"></exception>
         /// <exception cref="JsonSerializationException"></exception>
-        Task<ExchangeRates> GetExchangeRate(DateTime date, string baseline, IEnumerable<string> symbols);
+        Task<ExchangeRates> GetExchangeRate(DateTime date, string baseline, IEnumerable<string> currencies);
     }
 }

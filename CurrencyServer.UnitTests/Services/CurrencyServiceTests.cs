@@ -28,8 +28,8 @@ namespace CurrencyServer.UnitTests
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now.AddDays(-1),
-                toDate = DateTime.Now,
+                FromDate = DateTime.Now.AddDays(-1),
+                ToDate = DateTime.Now,
                 Baseline = "GBP",
                 Currencies = new List<string> { "SEK" }
             };
@@ -37,10 +37,10 @@ namespace CurrencyServer.UnitTests
             var pastRate = new ExchangeRates { Rates = new Dictionary<string, decimal> { { "SEK", 0.85m } } };
             var futureRate = new ExchangeRates { Rates = new Dictionary<string, decimal> { { "SEK", 0.86m } } };
 
-            _mockHttpClient.Setup(x => x.GetExchangeRate(request.fromDate, request.Baseline, request.Currencies))
+            _mockHttpClient.Setup(x => x.GetExchangeRate(request.FromDate, request.Baseline, request.Currencies))
                 .ReturnsAsync(pastRate);
 
-            _mockHttpClient.Setup(x => x.GetExchangeRate(request.toDate, request.Baseline, request.Currencies))
+            _mockHttpClient.Setup(x => x.GetExchangeRate(request.ToDate, request.Baseline, request.Currencies))
                 .ReturnsAsync(futureRate);
 
             // Act
@@ -58,8 +58,8 @@ namespace CurrencyServer.UnitTests
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now.AddDays(-1),
-                toDate = DateTime.Now,
+                FromDate = DateTime.Now.AddDays(-1),
+                ToDate = DateTime.Now,
                 Baseline = "GBP",
                 Currencies = new List<string>()
             };

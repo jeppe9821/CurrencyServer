@@ -1,6 +1,9 @@
 ﻿namespace CurrencyServer.Http
 {
-    public class UrlHelper
+    /// <summary>
+    /// General helper class for URL handling
+    /// </summary>
+    public static class UrlHelper
     {
         private const string EndingToken = "/";
 

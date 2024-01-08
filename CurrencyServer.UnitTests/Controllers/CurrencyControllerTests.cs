@@ -28,8 +28,8 @@ namespace CurrencyServer.UnitTests.Controllers
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now.AddDays(-1),
-                toDate = DateTime.Now,
+                FromDate = DateTime.Now.AddDays(-1),
+                ToDate = DateTime.Now,
                 Currencies = new List<string> { "SEK", "EUR" }
             };
 
@@ -58,8 +58,8 @@ namespace CurrencyServer.UnitTests.Controllers
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now,
-                toDate = DateTime.Now.AddDays(-1),
+                FromDate = DateTime.Now,
+                ToDate = DateTime.Now.AddDays(-1),
                 Currencies = new List<string> { "SEK", "EUR" }
             };
 
@@ -77,8 +77,8 @@ namespace CurrencyServer.UnitTests.Controllers
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now.AddDays(-1),
-                toDate = DateTime.Now,
+                FromDate = DateTime.Now.AddDays(-1),
+                ToDate = DateTime.Now,
                 Currencies = new List<string> { "SEK", "EUR" }
             };
 
@@ -96,8 +96,8 @@ namespace CurrencyServer.UnitTests.Controllers
             // Arrange
             var request = new CurrencyDeltaRequest
             {
-                fromDate = DateTime.Now.AddDays(-1),
-                toDate = DateTime.Now,
+                FromDate = DateTime.Now.AddDays(-1),
+                ToDate = DateTime.Now,
                 Currencies = new List<string>()
             };
 

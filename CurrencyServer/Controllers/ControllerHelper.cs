@@ -4,7 +4,10 @@ using System.Net;
 
 namespace CurrencyServer.Controllers
 {
-    public class ControllerHelper
+    /// <summary>
+    /// General purpose class for helper methods for Controller classes
+    /// </summary>
+    public static class ControllerHelper
     {
         public static ActionResult CreateResponse(HttpStatusCode statusCode, string errorCode, string errorDetails)
         {

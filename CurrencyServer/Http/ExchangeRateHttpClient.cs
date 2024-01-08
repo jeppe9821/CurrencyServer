@@ -7,7 +7,6 @@ namespace CurrencyServer.Http
 
     public class ExchangeRateHttpClient : IExchangeRateHttpClient
     {
-        private readonly string _exchangeRateApiBaseUrl;
         private readonly string _exchangeApiVersion;
         private readonly string _apiKey;
 
@@ -15,9 +14,8 @@ namespace CurrencyServer.Http
 
         public ExchangeRateHttpClient(ExchangeRateApiOptions apiOptions, HttpClient httpClient)
         {
-            _exchangeRateApiBaseUrl = apiOptions.BaseUrl ?? throw new ArgumentNullException("Base url is null", nameof(apiOptions));
-            _exchangeApiVersion = apiOptions.Version ?? throw new ArgumentNullException("Api version is null", nameof(apiOptions));
-            _apiKey = apiOptions.SecretKey ?? throw new ArgumentNullException("The secret key is null", nameof(apiOptions));
+            _exchangeApiVersion = apiOptions.Version ?? throw new ArgumentNullException(nameof(apiOptions), "Api version is null");
+            _apiKey = apiOptions.SecretKey ?? throw new ArgumentNullException(nameof(apiOptions), "The secret key is null");
 
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
@@ -25,9 +23,25 @@ namespace CurrencyServer.Http
         /// <inheritdoc/>
         public async Task<ExchangeRates> GetExchangeRate(DateTime date, string baseline, IEnumerable<string> currencies)
         {
+            if(date == DateTime.MinValue)
+            {
+                throw new ArgumentException(nameof(date));
+            }
+
+            if(string.IsNullOrEmpty(baseline))
+            {
+                throw new ArgumentException(nameof(baseline));
+            }
+
+            if(currencies == null || !currencies.Any())
+            {
+                throw new ArgumentException(nameof(currencies));
+            }
+
             var mergedCurrencies = string.Join(",", currencies);
 
-            //The baseline has to be added for the computation, but it should be only be added if the user already haven't added it themselves as they intend it to be viewable
+            //The baseline has to be added for the computation,
+            //but it should be only be added if the user already haven't added it themselves as they intend it to be viewable
             var addBaselineToSymbols = !currencies.Contains(baseline);
 
             var symbolsQuery = addBaselineToSymbols

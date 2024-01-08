@@ -14,8 +14,10 @@ namespace CurrencyServer
             builder.Configuration.AddEnvironmentVariables();
 
             builder.Services.AddCurrencyService(builder.Configuration.GetSection(nameof(CurrencyServiceOptions)));
-            
+
             builder.Services.AddExchangeRateHttpClient(builder.Configuration);
+
+            builder.Services.ConfigureApiBehaviourOptions();
 
             var app = builder.Build();
 

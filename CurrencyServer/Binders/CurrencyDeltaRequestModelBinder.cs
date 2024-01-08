@@ -14,7 +14,7 @@ namespace CurrencyServer.Binders
         {
             if(bindingContext == null)
             {
-                return;
+                throw new ArgumentNullException(nameof(bindingContext));
             }
 
             using (var reader = new StreamReader(bindingContext.HttpContext.Request.Body))
@@ -28,6 +28,34 @@ namespace CurrencyServer.Binders
 
                 if(model == null)
                 {
+                    bindingContext.Result = ModelBindingResult.Failed();
+                    return;
+                }
+
+                if(string.IsNullOrEmpty(model.Baseline))
+                {
+                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Invalid request. Baseline cannot be null or empty");
+                    bindingContext.Result = ModelBindingResult.Failed();
+                    return;
+                }
+
+                if (model.Currencies == null || !model.Currencies.Any())
+                {
+                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Invalid request. Currencies cannot be null or empty");
+                    bindingContext.Result = ModelBindingResult.Failed();
+                    return;
+                }
+
+                if (model.FromDate == DateTime.MinValue)
+                {
+                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Invalid request. From date cannot be empty");
+                    bindingContext.Result = ModelBindingResult.Failed();
+                    return;
+                }
+
+                if (model.ToDate == DateTime.MinValue)
+                {
+                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Invalid request. To date cannot be empty");
                     bindingContext.Result = ModelBindingResult.Failed();
                     return;
                 }

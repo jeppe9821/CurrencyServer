@@ -1,6 +1,8 @@
-﻿using CurrencyServer.Http;
+﻿using CurrencyServer.ErrorHandling;
+using CurrencyServer.Http;
 using CurrencyServer.Options;
 using CurrencyServer.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 
@@ -31,6 +33,29 @@ namespace CurrencyServer
                 client.BaseAddress = new Uri(UrlHelper.FixBaseAddress(exchangeRateConfig.BaseUrl));
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            });
+        }
+
+        public static void ConfigureApiBehaviourOptions(this IServiceCollection @this)
+        {
+            @this.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var error = actionContext.ModelState
+                        .FirstOrDefault(e => e.Value?.Errors.Count > 0);
+
+                    const string errorCode = "invalidModel";
+                    var errorDetails = error.Value?.Errors.FirstOrDefault()?.ErrorMessage;
+
+                    var formattedErrorResponse = new ApiRequestErrorResponse()
+                    {
+                        ErrorCode = errorCode,
+                        ErrorDetails = errorDetails == null ? "An internal error occured - could not fetch error message" : errorDetails
+                    };
+
+                    return new BadRequestObjectResult(formattedErrorResponse);
+                };
             });
         }
     }

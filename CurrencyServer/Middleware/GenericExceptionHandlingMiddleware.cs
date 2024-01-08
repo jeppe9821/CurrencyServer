@@ -41,7 +41,7 @@ namespace CurrencyServer.Middleware
         /// <returns></returns>
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            ObjectResult response = exception switch
+            var response = exception switch
             {
                 ApplicationException _ => new BadRequestObjectResult("Application exception occurred"),
                 KeyNotFoundException _ => new NotFoundObjectResult("The request key not found"),
@@ -51,9 +51,9 @@ namespace CurrencyServer.Middleware
 
             var exceptionResponse = new GenericExceptionResponse()
             {
-                StatusCode = response.StatusCode.Value,
+                StatusCode = response.StatusCode == null ? 500 : response.StatusCode.Value,
                 ExceptionMessage = $"{response.Value} - {exception.Message}",
-                Stacktrace = exception.StackTrace
+                Stacktrace = exception.StackTrace == null ? string.Empty : exception.StackTrace
             };
 
             context.Response.ContentType = MediaTypeNames.Application.Json;
