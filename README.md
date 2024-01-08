@@ -1,6 +1,6 @@
 # CurrencyServer
 
-For Genero code test
+CurrencyServer is a simple REST API created in ASP.NET utilizing MVC pipeline for the routing. Created for Genero code test 
 
 ## Running Locally
 
